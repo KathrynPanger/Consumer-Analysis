@@ -1,6 +1,29 @@
-################################
-#Function for Linear Regression
-###############################
+##############
+#Summary Stats
+##############
+def summarize(*args):
+    #define arguments
+    dataframe=args[0]
+    variable= args[1]
+    dfvar=dataframe[variable]
+    obs=len(dfvar)
+    maxvalue=max(dfvar)
+    minvalue=min(dfvar)
+    Q1=dfvar.quantile(q=0.25)
+    Q2=dfvar.quantile(q=0.5)
+    Q3=dfvar.quantile(q=0.75)
+    mean=dfvar.mean()
+    std=dfvar.std()
+
+    summary=pd.DataFrame({'Obs' : [obs], "Max" : [maxvalue], "Min" : [minvalue], "Q1" : [Q1], "Median" : [Q2], "Q3" : [Q3], "Mean" : [mean], "Std" : [std]})
+    print(summary)
+    print("\n")
+    hist=plt.hist(dfvar)
+    print(hist)
+##################
+#Linear Regression
+##################
+#Arg 1 = dataset, Args 2-N = "variable" (name in quotes)
 
 def regress(*args):
     #import dependencies
@@ -46,9 +69,11 @@ def regress(*args):
     plt.hlines(y=0, xmin=predictions.min(), xmax=predictions.max(), color='brown', linewidth=3)
     plt.show()
 
-#################################
-#Function for Logistic Regression
-#################################
+#####################
+#Logistic Regression
+#####################
+#Arg 1 = dataset, Args 2-N = "variable" (name in quotes)
+
 def linregress(*args):
     #import dependencies
     import sklearn as sk
