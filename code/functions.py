@@ -2,6 +2,9 @@
 #Summary Stats
 ##############
 def summarize(*args):
+    #dependencies
+    import pandas as pd
+    import matplotlib.pyplot as plt
     #define arguments
     dataframe=args[0]
     variable= args[1]
@@ -19,6 +22,8 @@ def summarize(*args):
     print(summary)
     print("\n")
     hist=plt.hist(dfvar)
+    plt.savefig(f"../figures/Histogram_{variable}.png")
+    plt.show()
     print(hist)
 ##################
 #Linear Regression
