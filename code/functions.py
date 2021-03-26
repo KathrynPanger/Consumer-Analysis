@@ -12,7 +12,7 @@ def summarize(dataframe,variable):
     print(description)
     print("\n")
     checkvar=dfvar.dropna()
-    if (checkvar % 1  == 0).all()== True and len(set(checkvar))<10::
+    if (checkvar % 1  == 0).all()== True and len(set(checkvar))<10:
         cats=set(checkvar)
         print("Obs per category")
         print("------------------")
