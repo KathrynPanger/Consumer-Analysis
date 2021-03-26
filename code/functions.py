@@ -119,6 +119,7 @@ def linregress(*args):
     from sklearn import feature_selection
     import statsmodels.api as sm
     from patsy import dmatrices
+    import numpy as np
 
     #define arguments
     dataframe=args[0]
@@ -142,11 +143,15 @@ def linregress(*args):
     ind=args[1]
     ind=ind.strip('"')
 
-    ##Get fitstats from patsy
+    ##Fit the Model
     Y,X = dmatrices(f"{ind} ~ {newstring}", data=dataframe, return_type="dataframe")
     logit = sm.Logit(Y, X)
     logit_result = logit.fit()
+
+    #Print Log Odds
+    print("LOG ODDS")
     print(logit_result.summary())
+    print(np.exp(logit_result.params))
 
     #Plot the Residuals
     print("\n Residual Plot")
