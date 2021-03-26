@@ -1,27 +1,26 @@
 ##############
 #Summary Stats
 ##############
-def summarize(*args):
+def summarize(dataframe,variable):
     #dependencies
     import pandas as pd
     import matplotlib.pyplot as plt
     import numpy as np
     #define arguments
-    dataframe=args[0]
-    variable= args[1]
     dfvar=dataframe[variable]
     description=dfvar.describe()
     print(description)
     print("\n")
-    if dfvar.dtype == "int64":
-        cats=set(dfvar)
+    checkvar=dfvar.dropna()
+    if (checkvar % 1  == 0).all()== True and len(set(checkvar))<10::
+        cats=set(checkvar)
         print("Obs per category")
         print("------------------")
         for item in cats:
            count=len(dataframe.loc[dfvar == item])
            percent=round(count/len(dfvar)*100, 2)
            print(f"{item}-> {count} ({percent}%)")
-        values=list(set(dfvar))
+        values=list(set(checkvar))
         marks= len(values)
         hist=plt.hist(dfvar, bins=len(values))
         plt.xticks(ticks=values)
