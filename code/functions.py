@@ -70,6 +70,7 @@ def regress(*args):
     from sklearn import feature_selection
     import statsmodels.api as sm
     from patsy import dmatrices
+    import matplotlib.pyplot as plt
 
     #define arguments
     dataframe=args[0]
@@ -161,7 +162,7 @@ def linregress(*args):
     
     model = Ridge()
 
-    visualizer = ResidualsPlot(model)
+    visualizer = ResidualsPlot(model, hist=True)
     y2= y.values.reshape(-1, 1)
     visualizer.fit(x, y2)  # Fit the training data to the visualizer
     visualizer.score(x, y2)  # Evaluate the model on the test data
