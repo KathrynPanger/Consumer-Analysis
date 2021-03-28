@@ -11,7 +11,8 @@ def summarize(dataframe,variable):
     description=dfvar.describe()
     print(description)
     print("\n")
-    checkvar=dfvar.dropna()
+    checkset=dataframe.dropna(subset=[variable])
+    checkvar=dfvar.dropna().copy(deep=True)
     if (checkvar % 1  == 0).all()== True and len(set(checkvar))<10:
         cats=set(checkvar)
         print("Obs per category")
@@ -20,13 +21,17 @@ def summarize(dataframe,variable):
            count=len(dataframe.loc[dfvar == item])
            percent=round(count/len(dfvar)*100, 2)
            print(f"{item}-> {count} ({percent}%)")
-        values=list(set(checkvar))
-        marks= len(values)
-        hist=plt.hist(dfvar, bins=len(values))
-        plt.xticks(ticks=values)
-        plt.savefig(f"../figures/Histogram_{variable}.png")
+
+        x = set(checkvar)
+        heightlist=[]
+        for value in x:
+            heightlist.append(len(checkset.loc[checkset[variable] == value]))
+
+        x_pos = [i for i, _ in enumerate(x)]
+        plt.barh(x_pos, heightlist, color='green')
+        plt.yticks(x_pos, x)
         plt.show()
-        print(hist)
+
     else:
         hist=plt.hist(dfvar, bins=10)
         plt.savefig(f"../figures/Histogram_{variable}.png")
